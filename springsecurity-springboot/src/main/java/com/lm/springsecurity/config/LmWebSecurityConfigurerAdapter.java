@@ -1,6 +1,7 @@
 package com.lm.springsecurity.config;
 
 import com.lm.springsecurity.security.LmAccessDecisionManager;
+import com.lm.springsecurity.security.LmAccessDeniedHandler;
 import com.lm.springsecurity.security.LmFilterInvocationSecurityMetadataSource;
 import com.lm.springsecurity.security.LmUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class LmWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     private LmFilterInvocationSecurityMetadataSource lmFilterInvocationSecurityMetadataSource;
     @Autowired
     private LmAccessDecisionManager lmAccessDecisionManager;
+    @Autowired
+    private LmAccessDeniedHandler lmAccessDeniedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -65,6 +68,8 @@ public class LmWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 //                .antMatchers("/user/**").hasAnyRole("USER")
                 .antMatchers("/h2/**").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                   .exceptionHandling().accessDeniedHandler(lmAccessDeniedHandler)
                 .and()
                 .httpBasic().and()
                 .formLogin();
