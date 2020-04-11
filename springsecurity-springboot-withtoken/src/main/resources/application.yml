@@ -18,7 +18,5 @@ spring:
       ddl-auto: update
 logging:
   level:
-    root: info
-  file:
-    path: F:/logs
+    root: debug
 

@@ -4,7 +4,6 @@ import com.lm.springsecurity.model.LmUserDetails;
 import com.lm.springsecurity.model.Role;
 import com.lm.springsecurity.repository.RoleRepository;
 import com.lm.springsecurity.repository.UserInfoRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +21,6 @@ import java.util.*;
  * @date 2020/4/6 9:56
  */
 @Component
-@Slf4j
 public class LmUserDetailsService implements UserDetailsService {
     @Autowired
     private UserInfoRepository userInfoRepository;
@@ -34,14 +32,6 @@ public class LmUserDetailsService implements UserDetailsService {
         if(lmUserDetails == null) {
             throw  new UsernameNotFoundException("username " + username + " was not found in db.");
         }
-
-        try {
-            int i = 0;
-            int j = 100/i;
-        } catch (Exception e) {
-            log.error("异常：{}",e.getMessage(),e);
-        }
-
 
         List<Role> roleInfos = roleRepository.findByUserId(lmUserDetails.getId());
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
